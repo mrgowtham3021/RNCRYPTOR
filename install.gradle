@@ -1,17 +1,17 @@
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 group = publishedGroupId                               // Maven Group ID for the artifact
 
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId publishedGroupId
-                artifactId artifact
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = publishedGroupId
+            artifactId = artifact
+            version = version
 
-                // Add your description here
+            // Add your description here
+            pom {
                 name libraryName
                 description libraryDescription
                 url siteUrl
@@ -34,9 +34,13 @@ install {
                     connection gitUrl
                     developerConnection gitUrl
                     url siteUrl
-
                 }
             }
         }
     }
+
+    repositories {
+        mavenLocal()
+    }
 }
+
